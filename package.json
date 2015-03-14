@@ -1,0 +1,13 @@
+{
+  "name"         : "notify",
+  "version"      : "0.0.1",
+  "description"  : "We'd like to tell you something!",
+  "main"         : "app.js",
+  "author"       : "Victor Hung",
+  "dependencies" : {
+    "express"    : "latest",
+    "apn"        : "*",
+    "firebase"   : "*",
+    "request"    : "*"
+  }
+}

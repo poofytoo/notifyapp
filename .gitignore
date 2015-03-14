@@ -1,0 +1,8 @@
+.DS_Store
+*.pem
+*.cer
+*.mobileprovision
+*.p12
+*.certSigningRequest
+
+/node_modules
