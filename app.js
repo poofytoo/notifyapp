@@ -33,7 +33,7 @@ function sendMessage(message, device) {
   var note = new apn.Notification();
 
   note.expiry = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.
-  note.badge = 1;
+  note.badge = 0;
   note.sound = "default";
   note.alert = message;
   note.payload = {'messageFrom': 'notify'};
@@ -55,7 +55,12 @@ var scanMessages = function() {
           var userID = uid;
           var subscriptionID = sid;
           var deviceID = did;
-          request(s.url, function(error, response, json){
+          if (s.url.indexOf('http') != 0) {
+            reqURL = "http://" + s.url;
+          } else {
+            reqURL = s.url;
+          }
+          request(reqURL function(error, response, json){
             if (!error) {
               message = JSON.parse(json).message
               if (s.lastMessage != message) {
