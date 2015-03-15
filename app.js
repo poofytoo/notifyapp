@@ -60,7 +60,7 @@ var scanMessages = function() {
           } else {
             reqURL = s.url;
           }
-          request(reqURL function(error, response, json){
+          request(reqURL, function(error, response, json){
             if (!error) {
               message = JSON.parse(json).message
               if (s.lastMessage != message) {
