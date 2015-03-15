@@ -29,7 +29,7 @@ ref.child('users').once('value', function(s) {
 });
 
 function sendMessage(message, device) {
-  console.log('message sent')
+  console.log('Sending Message: ', message )
   var note = new apn.Notification();
 
   note.expiry = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.
@@ -63,10 +63,13 @@ var scanMessages = function() {
           request(reqURL, function(error, response, json){
             if (!error) {
               message = JSON.parse(json).message
+              flag = JSON.parse(json).flag
               if (s.lastMessage != message) {
-                ref.child('users/' + userID + '/subscriptions/' + subscriptionID).update({ lastMessage : message });
+                ref.child('users/' + userID + '/subscriptions/' + subscriptionID).update({ lastMessage : message, lastFlag : flag });
                 sendMessage(message, new apn.Device(deviceID));
-                console.log('Sending Message: ', message )
+              } else if (s.lastFlag != flag) {
+                ref.child('users/' + userID + '/subscriptions/' + subscriptionID).update({ lastFlag : flag });
+                sendMessage(message, new apn.Device(deviceID));
               }
             } else {
               console.log(error);
@@ -79,5 +82,5 @@ var scanMessages = function() {
 }
 
 // scanMessages();
-setInterval(scanMessages, 5000);
+setInterval(scanMessages, 3000);
 
